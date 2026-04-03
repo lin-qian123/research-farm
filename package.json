@@ -1,0 +1,19 @@
+{
+  "name": "vibe-researching",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "import:paper": "node apps/cli/src/index.mjs import-paper",
+    "index:bundle": "node apps/cli/src/index.mjs index-markdown",
+    "desktop:dev": "NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 npm run dev -w @vibe-researching/desktop",
+    "desktop:build": "npm run build -w @vibe-researching/desktop",
+    "desktop:preview": "NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 npm run preview -w @vibe-researching/desktop",
+    "desktop:native:dev": "NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 npm run tauri:dev -w @vibe-researching/desktop",
+    "desktop:native:build": "npm run tauri:build -w @vibe-researching/desktop"
+  }
+}

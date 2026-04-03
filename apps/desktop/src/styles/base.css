@@ -1,0 +1,496 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.reader-app {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, var(--color-accent-soft), transparent 22%),
+    linear-gradient(180deg, var(--color-bg), var(--color-bg-alt));
+}
+
+.app-header,
+.reader-toolbar,
+.rail-panel,
+.reader-main {
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.app-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
+  padding: 24px 26px;
+  border-radius: 24px;
+}
+
+.brand {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.app-header h1,
+.reader-main-header h2 {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+.app-header h1 {
+  font-size: 2.3rem;
+}
+
+.subtitle,
+.status-line,
+.empty-state span,
+.future-box span,
+.selected-block-meta span,
+.tree-label,
+.block-meta,
+.toolbar-status span {
+  color: var(--color-muted);
+}
+
+.header-actions,
+.reader-toolbar,
+.interaction-buttons,
+.theme-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.reader-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
+  text-decoration: none;
+}
+
+.reader-button:hover,
+.theme-button:hover {
+  transform: translateY(-1px);
+}
+
+.reader-button.primary {
+  background: var(--color-ink);
+  color: #fff;
+}
+
+.reader-button.secondary,
+.reader-button.ghost,
+.theme-button {
+  background: var(--color-surface-soft);
+  color: var(--color-ink);
+  border-color: var(--color-line);
+}
+
+.reader-button input {
+  display: none;
+}
+
+.reader-toolbar {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbar-status {
+  display: grid;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.toolbar-status strong {
+  font-weight: 600;
+}
+
+.theme-button {
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+.theme-button.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.reader-layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 280px;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.left-rail,
+.right-rail {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.rail-panel,
+.reader-main {
+  padding: 18px;
+  border-radius: 24px;
+}
+
+.rail-panel.sticky {
+  position: sticky;
+  top: 24px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.panel-header p,
+.panel-title {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.tree-root,
+.toc-list {
+  display: grid;
+  gap: 8px;
+}
+
+.tree-group {
+  display: grid;
+  gap: 8px;
+}
+
+.tree-label {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.tree-children {
+  display: grid;
+  gap: 8px;
+  padding-left: 10px;
+  border-left: 1px dashed var(--color-line);
+}
+
+.tree-bundle,
+.toc-item {
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface-soft);
+  cursor: pointer;
+}
+
+.tree-bundle.active,
+.toc-item:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft-strong);
+}
+
+.empty-state {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px dashed var(--color-line);
+  background: var(--color-surface-soft);
+}
+
+.empty-state.small {
+  padding: 12px;
+}
+
+.reader-main {
+  min-height: 75vh;
+}
+
+.reader-main-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.reader-search {
+  width: min(320px, 100%);
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface-soft);
+}
+
+.reader-document {
+  display: grid;
+  gap: 14px;
+  max-width: 900px;
+  margin: 18px auto 0;
+}
+
+.reader-block {
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  background: var(--color-surface-soft);
+  cursor: pointer;
+}
+
+.reader-block.active,
+.reader-block:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft-strong);
+}
+
+.block-content {
+  line-height: 1.78;
+  font-size: 1.02rem;
+}
+
+.reader-block.role-heading {
+  padding-top: 22px;
+  padding-bottom: 12px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.reader-block.role-heading:hover,
+.reader-block.role-heading.active {
+  background: var(--color-accent-soft);
+}
+
+.reader-block.role-caption,
+.reader-block.role-reference {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.reader-block.role-caption .block-content,
+.reader-block.role-reference .block-content {
+  font-size: 0.93rem;
+  color: var(--color-muted);
+}
+
+.reader-block.role-figure .block-content,
+.reader-block.role-equation .block-content,
+.reader-block.role-table .block-content {
+  display: grid;
+  gap: 10px;
+}
+
+.block-content > :first-child {
+  margin-top: 0;
+}
+
+.block-content h1,
+.block-content h2,
+.block-content h3,
+.block-content h4 {
+  margin-top: 0;
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+.block-content p:last-child {
+  margin-bottom: 0;
+}
+
+.block-content ul,
+.block-content ol {
+  padding-left: 1.45rem;
+}
+
+.block-content li + li {
+  margin-top: 0.36rem;
+}
+
+.block-content blockquote {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-surface);
+  border-radius: 0 14px 14px 0;
+}
+
+.block-content a {
+  color: var(--color-accent);
+  text-underline-offset: 0.18em;
+}
+
+.block-content img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  margin: 16px auto;
+  border-radius: 14px;
+  box-shadow: var(--shadow-image);
+}
+
+.image-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  width: 100%;
+  border: 1px dashed var(--color-line);
+  border-radius: 14px;
+  color: var(--color-muted);
+  background: var(--color-surface);
+}
+
+.block-content pre,
+.block-content code {
+  font-family: var(--font-mono);
+}
+
+.block-content pre {
+  padding: 14px 16px;
+  overflow: auto;
+  border-radius: 14px;
+  background: var(--color-code-bg);
+}
+
+.block-content table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.block-content th,
+.block-content td {
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  vertical-align: top;
+}
+
+.block-content th {
+  background: var(--color-surface);
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+}
+
+.stats-box {
+  margin-bottom: 14px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 12px;
+}
+
+.stats-grid strong {
+  text-align: right;
+}
+
+.selected-block-meta,
+.future-box {
+  display: grid;
+  gap: 8px;
+}
+
+.selected-block-meta strong,
+.future-box p {
+  margin: 0;
+}
+
+.future-box {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--color-surface-soft);
+  border: 1px solid var(--color-line);
+}
+
+.status-line {
+  margin-top: 16px;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1360px) {
+  .reader-layout {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+
+  .right-rail {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .reader-app {
+    padding: 14px;
+  }
+
+  .app-header {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .reader-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .reader-main-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reader-search {
+    width: 100%;
+  }
+
+  .rail-panel.sticky {
+    position: static;
+  }
+}

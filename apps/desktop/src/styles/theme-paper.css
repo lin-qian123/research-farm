@@ -1,0 +1,18 @@
+.theme-paper {
+  --font-display: 'Fraunces', serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+  --color-bg: #f6efe4;
+  --color-bg-alt: #eee4d2;
+  --color-surface: rgba(255, 252, 246, 0.92);
+  --color-surface-soft: rgba(255, 252, 246, 0.68);
+  --color-ink: #1f2217;
+  --color-muted: #6a725f;
+  --color-line: rgba(31, 34, 23, 0.1);
+  --color-accent: #0f766e;
+  --color-accent-soft: rgba(15, 118, 110, 0.12);
+  --color-accent-soft-strong: rgba(15, 118, 110, 0.08);
+  --color-code-bg: #f1ebdf;
+  --shadow-soft: 0 18px 44px rgba(57, 45, 20, 0.1);
+  --shadow-image: 0 18px 34px rgba(32, 35, 22, 0.12);
+}

@@ -1,0 +1,18 @@
+.theme-journal {
+  --font-display: 'Fraunces', serif;
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+  --color-bg: #f3f0e8;
+  --color-bg-alt: #ebe5d8;
+  --color-surface: rgba(255, 255, 252, 0.94);
+  --color-surface-soft: rgba(255, 255, 252, 0.74);
+  --color-ink: #1a1c1a;
+  --color-muted: #64685f;
+  --color-line: rgba(26, 28, 26, 0.1);
+  --color-accent: #8a5b22;
+  --color-accent-soft: rgba(138, 91, 34, 0.12);
+  --color-accent-soft-strong: rgba(138, 91, 34, 0.08);
+  --color-code-bg: #f4eee3;
+  --shadow-soft: 0 18px 42px rgba(70, 52, 22, 0.08);
+  --shadow-image: 0 18px 34px rgba(26, 28, 26, 0.12);
+}

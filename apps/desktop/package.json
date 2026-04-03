@@ -1,0 +1,32 @@
+{
+  "name": "@vibe-researching/desktop",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ./scripts/free-dev-port.mjs && NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 vite --host 127.0.0.1 --port 4173 --strictPort",
+    "build": "vite build",
+    "preview": "NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 vite preview --host 127.0.0.1 --port 4173 --strictPort",
+    "tauri:dev": "NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 sh -c '. \"$HOME/.cargo/env\" && tauri dev'",
+    "tauri:build": "sh -c '. \"$HOME/.cargo/env\" && tauri build --debug --bundles app'"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.10.1",
+    "@tauri-apps/plugin-dialog": "^2.6.0",
+    "katex": "^0.16.44",
+    "rehype-raw": "^7.0.0",
+    "rehype-katex": "^7.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.10.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10"
+  }
+}
