@@ -16,3 +16,32 @@
   --shadow-soft: 0 20px 44px rgba(0, 0, 0, 0.32);
   --shadow-image: 0 18px 34px rgba(0, 0, 0, 0.24);
 }
+
+.theme-slate,
+.theme-slate h1,
+.theme-slate h2,
+.theme-slate h3,
+.theme-slate h4,
+.theme-slate h5,
+.theme-slate h6,
+.theme-slate p,
+.theme-slate li,
+.theme-slate span,
+.theme-slate strong,
+.theme-slate em,
+.theme-slate label,
+.theme-slate button,
+.theme-slate input,
+.theme-slate textarea,
+.theme-slate select,
+.theme-slate .block-content,
+.theme-slate .block-content *,
+.theme-slate .katex,
+.theme-slate .katex * {
+  color: var(--color-ink);
+}
+
+.theme-slate input::placeholder,
+.theme-slate textarea::placeholder {
+  color: var(--color-muted);
+}

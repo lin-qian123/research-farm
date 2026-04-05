@@ -11,7 +11,7 @@ Markdown-first local research runtime with a desktop-style research interface.
 ## Current Scaffold
 
 - `apps/cli`: batch import and Markdown bundle indexing
-- `apps/desktop`: runnable React desktop preview for `Inbox`, `Library`, `Reader`, `Graph`, and `Workspace`
+- `apps/desktop`: modularized React + Tauri research workspace with `app / features / shared` structure
 - `packages/research-domain`: shared research models
 - `packages/markdown-engine`: block and asset indexing
 - `packages/paper-ingest`: MinerU-native ingest and bundle generation
@@ -19,6 +19,12 @@ Markdown-first local research runtime with a desktop-style research interface.
 - `packages/research-memory`: evidence-backed memory helpers
 - `python/sidecar`: MinerU conversion sidecar
 - `docs/`: architecture, bundle, runtime, and roadmap docs
+
+## Architecture Docs
+
+- `docs/paper-bundle-spec.md`: canonical bundle file layout
+- `docs/research-runtime-spec.md`: runtime roles, task kinds, and research workflow
+- `docs/desktop-architecture.md`: desktop layering, module boundaries, and reader runtime
 
 ## Quick Start
 

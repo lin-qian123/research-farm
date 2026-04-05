@@ -55,6 +55,36 @@ Each task should include:
 - `input`
 - `result`
 
+### Planned Task Kinds
+
+- `convert_bundle`
+- `repair_bundle`
+- `read_bundle`
+- `analyze_figure`
+- `analyze_equation`
+- `build_article_outline`
+- `library_synthesis`
+- `persist_memory`
+- `block_action`
+
+### Block Action Types
+
+The first AI-facing workflow is block-scoped rather than document-scoped.
+
+- `translate`
+- `summarize`
+- `explain`
+- `rewrite`
+- `correct`
+
+Every block action must be addressable by:
+
+- `bundle_id`
+- `block_id`
+- optional selection range
+
+And every evidence-backed result must include explicit `evidence_refs`.
+
 ## Notification Shape
 
 Notifications should stay close to the Claude Code async task model:
@@ -85,3 +115,26 @@ Notifications should stay close to the Claude Code async task model:
 - Figure, equation, and reader tasks for the same bundle can run in parallel.
 - Bundle repair for the same bundle must run serially.
 - Project memory writes must run serially.
+
+## Research Workflow
+
+The runtime should align with a stable research loop instead of UI page groupings:
+
+1. `Ingest`
+   - import pdf / directory
+   - run MinerU
+   - build bundle
+   - validate bundle files
+2. `Read`
+   - open bundle
+   - construct reader blocks
+   - navigate by `block_id`
+   - edit/save by `block_id`
+3. `Act on block`
+   - translate / summarize / explain / rewrite / correct
+4. `Build article memory`
+   - aggregate validated block outputs into article outline memory
+5. `Build library memory`
+   - synthesize multiple article memories into library memory
+6. `Build durable memory`
+   - persist reusable research knowledge with evidence references

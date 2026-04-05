@@ -5,6 +5,8 @@ const PAGE_MARKER_RE = /^<!--\s*page:\s*(\d+)\s*-->$/i;
 const HEADING_RE = /^(#{1,6})\s+(.*)$/;
 const FIGURE_RE = /!\[([^\]]*)\]\(([^)]+)\)/g;
 const BLOCK_EQUATION_RE = /\$\$([\s\S]+?)\$\$/g;
+const HTML_TABLE_RE = /<table\b[\s\S]*?<\/table>/i;
+const HTML_TABLE_CELL_RE = /<(table|thead|tbody|tr|td|th)\b/i;
 const DOI_RE = /\b10\.\d{4,9}\/[-._;()/:A-Z0-9]+\b/gi;
 const ARXIV_RE = /\barXiv:\s*([0-9]{4}\.[0-9]{4,5}(?:v\d+)?)\b/gi;
 
@@ -39,7 +41,11 @@ function buildBlock(bundleId, index, sectionPath, blockType, markdown, page, sta
 }
 
 function classifyBufferedBlock(markdown) {
-  if (markdown.includes('|') && markdown.split('\n').some(line => /^\s*\|?[-: ]+\|[-|: ]+\s*$/.test(line))) {
+  if (
+    HTML_TABLE_RE.test(markdown)
+    || (HTML_TABLE_CELL_RE.test(markdown) && /<\/(td|th|tr|table)>/i.test(markdown))
+    || (markdown.includes('|') && markdown.split('\n').some(line => /^\s*\|?[-: ]+\|[-|: ]+\s*$/.test(line)))
+  ) {
     return 'table';
   }
   if (markdown.includes('![')) return 'figure';

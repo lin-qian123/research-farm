@@ -1,4 +1,10 @@
-import { createResearchTask, hashText } from '../../research-domain/src/index.mjs';
+import {
+  BLOCK_ACTION_TYPES,
+  createBlockActionInput,
+  createResearchTask,
+  hashText,
+  TASK_KINDS as DOMAIN_TASK_KINDS,
+} from '../../research-domain/src/index.mjs';
 
 export const RESEARCH_AGENT_ROLES = [
   'scout',
@@ -8,19 +14,11 @@ export const RESEARCH_AGENT_ROLES = [
   'equation',
   'curator',
   'memory',
+  'library',
+  'durable_memory',
 ];
 
-export const TASK_KINDS = [
-  'import',
-  'convert',
-  'repair_bundle',
-  'summarize_blocks',
-  'extract_figures',
-  'extract_equations',
-  'build_graph',
-  'compare_bundles',
-  'write_memory',
-];
+export const TASK_KINDS = [...DOMAIN_TASK_KINDS];
 
 export function createRuntimeTask({ kind, agentRole, bundleIds = [], projectId = null, input = {} }) {
   return createResearchTask({
@@ -46,6 +44,73 @@ export function canRunTasksInParallel(leftTask, rightTask) {
     }
   }
   return true;
+}
+
+export function createBlockActionTask({ bundleId, blockId, actionType, selection = null, projectId = null }) {
+  const input = createBlockActionInput({
+    bundle_id: bundleId,
+    block_id: blockId,
+    action_type: actionType,
+    selection,
+  });
+
+  return createRuntimeTask({
+    kind: 'block_action',
+    agentRole: 'reader',
+    bundleIds: [bundleId],
+    projectId,
+    input,
+  });
+}
+
+export function createArticleOutlineTask({ bundleId, projectId = null, outlineTitle = null }) {
+  return createRuntimeTask({
+    kind: 'article_outline',
+    agentRole: 'memory',
+    bundleIds: [bundleId],
+    projectId,
+    input: {
+      bundle_id: bundleId,
+      outline_title: outlineTitle,
+    },
+  });
+}
+
+export function createLibrarySynthesisTask({ bundleIds, projectId = null, scopeId = null }) {
+  return createRuntimeTask({
+    kind: 'library_synthesis',
+    agentRole: 'library',
+    bundleIds,
+    projectId,
+    input: {
+      scope_id: scopeId,
+      bundle_ids: bundleIds,
+    },
+  });
+}
+
+export function createPersistentMemoryTask({ projectId = null, sourceMemoryIds = [] }) {
+  return createRuntimeTask({
+    kind: 'persistent_memory',
+    agentRole: 'durable_memory',
+    bundleIds: [],
+    projectId,
+    input: {
+      source_memory_ids: sourceMemoryIds,
+    },
+  });
+}
+
+export function getSupportedBlockActionTypes() {
+  return [...BLOCK_ACTION_TYPES];
+}
+
+export function createEvidenceSearchQuery({ bundleId, blockId = null, query }) {
+  return {
+    bundle_id: bundleId,
+    block_id: blockId,
+    query,
+  };
 }
 
 export function buildTaskNotification({ task, status, summary, result = null }) {

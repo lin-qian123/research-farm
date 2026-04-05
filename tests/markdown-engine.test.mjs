@@ -37,3 +37,18 @@ See arXiv:2401.01234 for details.
   assert.match(index.figures[0].figure_id, /^fig_/);
   assert.match(index.equations[0].equation_id, /^eq_/);
 });
+
+test('buildAnchorIndex classifies html tables as table blocks', () => {
+  const markdown = `# Title
+
+<table><tr><td>Level</td><td>Position, ref (eV)</td></tr><tr><td>6s</td><td>-20.738</td></tr></table>
+`;
+
+  const index = buildAnchorIndex({
+    bundleId: 'bundle_html_table',
+    markdown,
+  });
+
+  assert.equal(index.tables.length, 1);
+  assert.equal(index.blocks.find(block => block.block_type === 'table')?.block_type, 'table');
+});
