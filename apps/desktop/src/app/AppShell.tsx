@@ -18,6 +18,8 @@ export function AppShell() {
   const { theme } = useReaderTheme();
   const library = useLibrary();
   const [activeLeftRailPanel, setActiveLeftRailPanel] = useState<LeftRailPanel>('library');
+  const [isLeftRailCollapsed, setIsLeftRailCollapsed] = useState(false);
+  const [isRightRailCollapsed, setIsRightRailCollapsed] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [libraryContextMenu, setLibraryContextMenu] = useState<LibraryContextMenuState>(null);
   const [blockContextMenu, setBlockContextMenu] = useState<BlockContextMenuState>(null);
@@ -109,27 +111,50 @@ export function AppShell() {
         <div className="left-rail-switcher top-toolbar-switcher">
           <button
             type="button"
-            className={activeLeftRailPanel === 'library' ? 'left-rail-button active' : 'left-rail-button'}
-            onClick={() => setActiveLeftRailPanel('library')}
-            title={UI.library}
-            aria-label={UI.library}
+            className={isLeftRailCollapsed ? 'left-rail-button' : 'left-rail-button active'}
+            onClick={() => setIsLeftRailCollapsed(current => !current)}
+            title={isLeftRailCollapsed ? UI.expandLeftRail : UI.collapseLeftRail}
+            aria-label={isLeftRailCollapsed ? UI.expandLeftRail : UI.collapseLeftRail}
           >
-            {UI.leftRailLibraryShort}
+            {isLeftRailCollapsed ? '→' : '←'}
           </button>
-          <button
-            type="button"
-            className={activeLeftRailPanel === 'outline' ? 'left-rail-button active' : 'left-rail-button'}
-            onClick={() => setActiveLeftRailPanel('outline')}
-            title={UI.outline}
-            aria-label={UI.outline}
-          >
-            {UI.leftRailOutlineShort}
-          </button>
+          {!isLeftRailCollapsed ? (
+            <>
+              <button
+                type="button"
+                className={activeLeftRailPanel === 'library' ? 'left-rail-button active' : 'left-rail-button'}
+                onClick={() => setActiveLeftRailPanel('library')}
+                title={UI.library}
+                aria-label={UI.library}
+              >
+                {UI.leftRailLibraryShort}
+              </button>
+              <button
+                type="button"
+                className={activeLeftRailPanel === 'outline' ? 'left-rail-button active' : 'left-rail-button'}
+                onClick={() => setActiveLeftRailPanel('outline')}
+                title={UI.outline}
+                aria-label={UI.outline}
+              >
+                {UI.leftRailOutlineShort}
+              </button>
+            </>
+          ) : null}
         </div>
 
         <div />
 
-        <div ref={settingsShellRef} className="settings-shell top-toolbar-settings">
+        <div className="top-toolbar-settings">
+          <button
+            type="button"
+            className={isRightRailCollapsed ? 'left-rail-button' : 'left-rail-button active'}
+            onClick={() => setIsRightRailCollapsed(current => !current)}
+            title={isRightRailCollapsed ? UI.expandRightRail : UI.collapseRightRail}
+            aria-label={isRightRailCollapsed ? UI.expandRightRail : UI.collapseRightRail}
+          >
+            {isRightRailCollapsed ? '←' : '→'}
+          </button>
+          <div ref={settingsShellRef} className="settings-shell">
           <button
             type="button"
             className={isSettingsOpen ? 'settings-button active' : 'settings-button'}
@@ -139,37 +164,42 @@ export function AppShell() {
           </button>
           <SettingsPanel isOpen={isSettingsOpen} />
         </div>
+        </div>
       </div>
 
-      <div className="reader-layout">
-        <LibraryPanel
-          activePanel={activeLeftRailPanel}
-          bundles={library.bundles}
-          tree={library.tree}
-          activeBundlePath={library.activeBundlePath}
-          expandedGroups={library.expandedGroups}
-          tocEntries={library.tocEntries}
-          selectedBlockId={library.selectedBlock?.block_id || null}
-          onToggleGroup={library.toggleGroup}
-          onOpenBundle={bundle => void library.openBundle(bundle)}
-          onNavigateToBlock={library.navigateToBlockId}
-          onGroupContextMenu={(event, groupPath, label) => {
-            event.preventDefault();
-            setLibraryContextMenu({
-              x: event.clientX,
-              y: event.clientY,
-              target: { kind: 'group', groupPath, label },
-            });
-          }}
-          onBundleContextMenu={(event, bundle) => {
-            event.preventDefault();
-            setLibraryContextMenu({
-              x: event.clientX,
-              y: event.clientY,
-              target: { kind: 'bundle', bundle },
-            });
-          }}
-        />
+      <div
+        className={`reader-layout${isLeftRailCollapsed ? ' is-left-collapsed' : ''}${isRightRailCollapsed ? ' is-right-collapsed' : ''}`}
+      >
+        {!isLeftRailCollapsed ? (
+          <LibraryPanel
+            activePanel={activeLeftRailPanel}
+            bundles={library.bundles}
+            tree={library.tree}
+            activeBundlePath={library.activeBundlePath}
+            expandedGroups={library.expandedGroups}
+            tocEntries={library.tocEntries}
+            selectedBlockId={library.selectedBlock?.block_id || null}
+            onToggleGroup={library.toggleGroup}
+            onOpenBundle={bundle => void library.openBundle(bundle)}
+            onNavigateToBlock={library.navigateToBlockId}
+            onGroupContextMenu={(event, groupPath, label) => {
+              event.preventDefault();
+              setLibraryContextMenu({
+                x: event.clientX,
+                y: event.clientY,
+                target: { kind: 'group', groupPath, label },
+              });
+            }}
+            onBundleContextMenu={(event, bundle) => {
+              event.preventDefault();
+              setLibraryContextMenu({
+                x: event.clientX,
+                y: event.clientY,
+                target: { kind: 'bundle', bundle },
+              });
+            }}
+          />
+        ) : null}
 
         <ReaderPane
           onBlockContextMenu={(event, block) => {
@@ -182,7 +212,7 @@ export function AppShell() {
           }}
         />
 
-        <BlockActionPanel />
+        {!isRightRailCollapsed ? <BlockActionPanel /> : null}
       </div>
 
       <LibraryContextMenu

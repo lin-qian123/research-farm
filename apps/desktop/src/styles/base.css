@@ -132,6 +132,18 @@ textarea {
   min-height: 0;
 }
 
+.reader-layout.is-left-collapsed {
+  grid-template-columns: minmax(0, 1fr) 280px;
+}
+
+.reader-layout.is-right-collapsed {
+  grid-template-columns: 300px minmax(0, 1fr);
+}
+
+.reader-layout.is-left-collapsed.is-right-collapsed {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .top-toolbar {
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr) 280px;
@@ -149,6 +161,9 @@ textarea {
 }
 
 .top-toolbar-settings {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   justify-self: end;
 }
 
